@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 from pymongo import MongoClient
+#import messagebox
 Client = MongoClient('localhost', 27017)
 db=Client['CRUD-testp']
-persons=db['persons5']
+persons=db['persons6']
+
 
 
 
@@ -21,18 +23,69 @@ screen.configure(bg="#34b4eb")
 #def
 
 def onclickreg(e):
-    person = {"name":Name.get(), "lastname":LasName.get(), "field":StdField.get(), "age":Age.get()}
-    table.insert('', 'end', values=[person['name'], person['lastname'], person['field'], person['age']])
-    Register(person)
+    if Name.get()=="" or LasName.get()=="" or StdField.get()=="" or Age.get()=="":
+        print("please fill all of the boxes")
+        #messagebox.showerror("توجه", "تمامی باکس ها را داده وارد کنید")
+
+    else:
+        try:
+            person = {"name":Name.get(), "lastname":LasName.get(), "field":StdField.get(), "age":int(Age.get())}
+            if Exist(person)==False:
+                Register(person)
+                Load()
+                Clearentry()
+                print("register was succesfull")
+                #messagebox.showinfo("تمام", "ثبت نام با موفقیت انجام شد")
+            else:
+                print("this person is already registered")
+                #messagebox.showinfo("توجه", "این کاربر قبلا ثبت شده است")
+        except:
+            print("please enter a number inside age box")
+            #messagebox.showerror("توجه", "مقدار داخل باکس سن را عددی وارد کنید")
 
 
 def Register(person):
     persons.insert_one(person)
+    print(persons)
 
 
 
 
+def ReadData():
+    result = persons.find()
+    return result
 
+def Exist(person):
+    alldata = ReadData()
+    for data in alldata:
+        if data["name"]==person["name"] and data["lastname"]==person["lastname"] and data["field"]==person["field"] and data["age"]==person["age"]:
+            return True
+        return False
+
+
+def Load():
+    alldata=ReadData()
+    Cleantable()
+    for data in alldata:
+        InsertDataToTable(data)
+
+
+def InsertDataToTable(person):
+
+    table.insert('', 'end', values=[person['name'], person['lastname'], person['field'], person['age']])
+
+
+def Clearentry():
+    Name.set("")
+    LasName.set("")
+    StdField.set("")
+    Age.set("")
+    txtname.focus_set()
+
+
+def Cleantable():
+    for item in table.get_children():
+        table.delete(item)
 
 
 
