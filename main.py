@@ -8,17 +8,12 @@ persons=db['persons6']
 
 
 
-
-
-
 screen = Tk()
 
 screen.geometry("850x500+400+200")
 screen.title("CRUD")
 screen.configure(bg="#34b4eb")
 screen.resizable(width=False , height=False)
-
-
 
 
 #def
@@ -49,12 +44,10 @@ def Register(person):
     persons.insert_one(person)
 
 
-
-
-
 def ReadData():
     result = persons.find()
     return result
+
 
 def Exist(person):
     alldata = ReadData()
@@ -89,9 +82,6 @@ def Cleantable():
         table.delete(item)
 
 
-
-
-
 def onclicksrch():
     dialog = Searchvar.get()
     if dialog=="":
@@ -103,7 +93,6 @@ def onclicksrch():
             InsertDataToTable(item)
 
 
-
 def Search(dialog):
     searchresult = []
     alldata = ReadData()
@@ -112,9 +101,6 @@ def Search(dialog):
             searchresult.append(data)
             return searchresult
         
-
-
-
 
 def onclickdlt():
     selected_row = table.selection()
@@ -137,11 +123,6 @@ def FindData(person):
         if data['name']==person['name'] and data['lastname']==person['lastname'] and data['field']==person['field'] and data['age']==person['age']:
             return data
     return False
-
-
-
-
-
 
 
 def Selection(e):
@@ -173,24 +154,6 @@ def Update(OldPerson,NewPerson):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #variables
 
 Name = StringVar()
@@ -198,7 +161,6 @@ LasName = StringVar()
 StdField = StringVar()
 Age = StringVar()
 Searchvar = StringVar()
-
 
 
 
@@ -218,20 +180,6 @@ txtage.place(x=150, y=250)
 
 txtsrch = Entry(screen, bd=4,textvariable=Searchvar,width="18", font=("arial 13 bold"), justify="center")
 txtsrch.place(x=500, y=50)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -255,47 +203,19 @@ lblage.place(x=30, y=250)
 
 btnreg = Button(screen, text="Register",bd=2, font=("arial 13 bold"), fg="#34b4eb", bg="black")
 btnreg.place(x=200, y=300)
-
 btnreg.bind("<Button-1>", onclickreg)
-
-
-
 
 btnsrch= Button(screen, text="Search",bd=2, font=("arial 13 bold"), fg="#34b4eb", bg="black",command=onclicksrch)
 btnsrch.place(x=700, y=50)
 
-
-
-
 btndlt= Button(screen, text="Delete",bd=2, font=("arial 13 bold"), fg="black", bg="red",command=onclickdlt)
 btndlt.place(x=700, y=330)
-
-
-
-
 
 btnload = Button(screen, text="Reload",bd=2, font=("arial 13 bold"), fg="#34b4eb", bg="black",command=Load)
 btnload.place(x=400, y=330)
 
-
-
-
-
-
 btnupd= Button(screen, text="Update",bd=2, font=("arial 13 bold"), fg="black", bg="#03bafc",command=onClickUpdate)
 btnupd.place(x=550, y=330)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -303,7 +223,6 @@ btnupd.place(x=550, y=330)
 
 table = ttk.Treeview(screen,columns=("c1","c2","c3","c4"), show="headings")
 table.place(x=400, y=100)
-
 
 table.column("c1", anchor=CENTER, width=90)
 table.heading("c1", text="Name")
@@ -317,12 +236,7 @@ table.heading("c3", text="Field")
 table.column("c4", anchor=CENTER, width=90)
 table.heading("c4", text="Age")
 
-
 table.bind("<Button-1>",Selection)
-
-
-
-
 
 
 screen.mainloop()
