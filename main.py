@@ -1,11 +1,40 @@
 from tkinter import *
 from tkinter import ttk
+from pymongo import MongoClient
+Client = MongoClient('localhost', 27017)
+db=Client['CRUD-testp']
+persons=db['persons5']
+
+
+
+
 
 screen = Tk()
 
 screen.geometry("850x500+400+200")
 screen.title("CRUD")
 screen.configure(bg="#34b4eb")
+
+
+
+
+#def
+
+def onclickreg(e):
+    person = {"name":Name.get(), "lastname":LasName.get(), "field":StdField.get(), "age":Age.get()}
+    table.insert('', 'end', values=[person['name'], person['lastname'], person['field'], person['age']])
+    Register(person)
+
+
+def Register(person):
+    persons.insert_one(person)
+
+
+
+
+
+
+
 
 
 #variables
@@ -47,6 +76,20 @@ lblfield.place(x=30, y=200)
 
 lblage = Label(screen, text="Age", font=("arial 13 bold"), fg="black", bg="#34b4eb")
 lblage.place(x=30, y=250)
+
+
+
+#buttons
+
+btnreg = Button(screen, text="Register",bd=2, font=("arial 13 bold"), fg="#34b4eb", bg="black")
+btnreg.place(x=200, y=300)
+
+btnreg.bind("<Button-1>", onclickreg)
+
+
+
+
+
 
 
 
