@@ -46,7 +46,7 @@ def onclickreg(e):
 
 def Register(person):
     persons.insert_one(person)
-    print(persons)
+
 
 
 
@@ -90,12 +90,58 @@ def Cleantable():
 
 
 
+
+def onclicksrch():
+    dialog = Searchvar.get()
+    if dialog=="":
+        Load()
+    else:
+        result = Search(dialog)
+        Cleantable()
+        for item in result:
+            InsertDataToTable(item)
+
+
+
+def Search(dialog):
+    searchresult = []
+    alldata = ReadData()
+    for data in alldata:
+        if data["name"]==dialog or data["lastname"]==dialog or data["field"]==dialog or data["age"]==dialog:
+            searchresult.append(data)
+            return searchresult
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #variables
 
 Name = StringVar()
 LasName = StringVar()
 StdField = StringVar()
 Age = StringVar()
+Searchvar = StringVar()
 
 
 
@@ -113,6 +159,23 @@ txtfield.place(x=150, y=200)
 
 txtage = Entry(screen, bd=4,textvariable=Age,width="18", font=("arial 13 bold"), justify="center")
 txtage.place(x=150, y=250)
+
+txtsrch = Entry(screen, bd=4,textvariable=Searchvar,width="18", font=("arial 13 bold"), justify="center")
+txtsrch.place(x=500, y=50)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -138,6 +201,17 @@ btnreg = Button(screen, text="Register",bd=2, font=("arial 13 bold"), fg="#34b4e
 btnreg.place(x=200, y=300)
 
 btnreg.bind("<Button-1>", onclickreg)
+
+
+
+
+
+
+
+btnsrch= Button(screen, text="Search",bd=2, font=("arial 13 bold"), fg="#34b4eb", bg="black",command=onclicksrch)
+btnsrch.place(x=700, y=50)
+
+
 
 
 
