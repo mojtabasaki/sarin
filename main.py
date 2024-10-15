@@ -33,4 +33,25 @@ txtage = Entry(screen, bd=4,textvariable=Age,width="18", font=("arial 13 bold"),
 txtage.place(x=150, y=250)
 
 
+
+#lables
+
+lblname = Label(screen, text="Name", font=("arial 13 bold"), fg="black", bg="#34b4eb")
+lblname.place(x=30, y=100)
+
+lbllastname = Label(screen, text="Last Name", font=("arial 13 bold"), fg="black", bg="#34b4eb")
+lbllastname.place(x=30, y=150)
+
+lblfield = Label(screen, text="Field", font=("arial 13 bold"), fg="black", bg="#34b4eb")
+lblfield.place(x=30, y=200)
+
+lblage = Label(screen, text="Age", font=("arial 13 bold"), fg="black", bg="#34b4eb")
+lblage.place(x=30, y=250)
+
+
+
+
+
+
+
 screen.mainloop()
