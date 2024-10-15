@@ -1,9 +1,9 @@
 from tkinter import *
-
+from tkinter import ttk
 
 screen = Tk()
 
-screen.geometry("800x500+400+200")
+screen.geometry("850x500+400+200")
 screen.title("CRUD")
 screen.configure(bg="#34b4eb")
 
@@ -47,6 +47,28 @@ lblfield.place(x=30, y=200)
 
 lblage = Label(screen, text="Age", font=("arial 13 bold"), fg="black", bg="#34b4eb")
 lblage.place(x=30, y=250)
+
+
+
+
+#table
+
+table = ttk.Treeview(screen,columns=("c1","c2","c3","c4"), show="headings")
+table.place(x=400, y=100)
+
+
+table.column("c1", anchor=CENTER, width=90)
+table.heading("c1", text="Name")
+
+table.column("c2", anchor=CENTER, width=130)
+table.heading("c2", text="Last Name")
+
+table.column("c3", anchor=CENTER, width=90)
+table.heading("c3", text="Field")
+
+table.column("c4", anchor=CENTER, width=90)
+table.heading("c4", text="Age")
+
 
 
 
