@@ -115,6 +115,29 @@ def Search(dialog):
 
 
 
+def onclickdlt():
+    selected_row = table.selection()
+    if selected_row != ():
+        Data = table.item(selected_row)["values"]
+        person = {"name": Data[0], "lastname": Data[1], "field": Data[2], "age": int(Data[3])}
+        Delete(person)
+        table.delete(selected_row)
+
+
+def Delete(person):
+    result = FindData(person)
+    if result !=False:
+        persons.delete_one(person)
+
+
+def FindData(person):
+    alldata = ReadData()
+    for data in alldata:
+        if data['name']==person['name'] and data['lastname']==person['lastname'] and data['field']==person['field'] and data['age']==person['age']:
+            return data
+    return False
+
+
 
 
 
@@ -205,11 +228,24 @@ btnreg.bind("<Button-1>", onclickreg)
 
 
 
-
-
-
 btnsrch= Button(screen, text="Search",bd=2, font=("arial 13 bold"), fg="#34b4eb", bg="black",command=onclicksrch)
 btnsrch.place(x=700, y=50)
+
+
+
+
+btndlt= Button(screen, text="Delete",bd=2, font=("arial 13 bold"), fg="black", bg="red",command=onclickdlt)
+btndlt.place(x=700, y=330)
+
+
+
+
+
+btnload = Button(screen, text="Reload",bd=2, font=("arial 13 bold"), fg="#34b4eb", bg="black",command=Load)
+btnload.place(x=400, y=330)
+
+
+
 
 
 
