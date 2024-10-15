@@ -16,6 +16,7 @@ screen = Tk()
 screen.geometry("850x500+400+200")
 screen.title("CRUD")
 screen.configure(bg="#34b4eb")
+screen.resizable(width=False , height=False)
 
 
 
@@ -143,6 +144,38 @@ def FindData(person):
 
 
 
+def Selection(e):
+    selected_row = table.selection()
+    if selected_row !=():
+        data=table.item(selected_row)['values']
+        Name.set(data[0])
+        LasName.set(data[1])
+        StdField.set(data[2])
+        Age.set(data[3])
+
+
+def onClickUpdate():
+     selected_row = table.selection()
+     if selected_row != ():
+        Data = table.item(selected_row)['values']
+        OldPerson = {'name': Data[0], 'lastname': Data[1], 'field': Data[2], 'age': int(Data[3])}
+        NewPerson={'name':Name.get(),'lastname':LasName.get(),'field':StdField.get(),'age':int(Age.get())}
+        Update(OldPerson,NewPerson)
+        Cleantable()
+        Load()
+
+
+def Update(OldPerson,NewPerson):
+    result=FindData(OldPerson)
+    if result!=False:
+        newData={'$set':NewPerson}
+        persons.update_one(OldPerson,newData)
+
+
+
+
+
+
 
 
 
@@ -249,6 +282,15 @@ btnload.place(x=400, y=330)
 
 
 
+btnupd= Button(screen, text="Update",bd=2, font=("arial 13 bold"), fg="black", bg="#03bafc",command=onClickUpdate)
+btnupd.place(x=550, y=330)
+
+
+
+
+
+
+
 
 
 
@@ -276,6 +318,7 @@ table.column("c4", anchor=CENTER, width=90)
 table.heading("c4", text="Age")
 
 
+table.bind("<Button-1>",Selection)
 
 
 
