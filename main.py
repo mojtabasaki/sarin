@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from pymongo import MongoClient
-#import messagebox
+from tkinter import messagebox
 Client = MongoClient('localhost', 27017)
 db=Client['CRUD-testp']
 persons=db['persons6']
@@ -20,24 +20,27 @@ screen.resizable(width=False , height=False)
 
 def onclickreg(e):
     if Name.get()=="" or LasName.get()=="" or StdField.get()=="" or Age.get()=="":
-        print("please fill all of the boxes")
-        #messagebox.showerror("توجه", "تمامی باکس ها را داده وارد کنید")
+        #print("please fill all of the boxes")
+        messagebox.showerror("Attention!", "Please fill all the boxes")
 
     else:
         try:
             person = {"name":Name.get(), "lastname":LasName.get(), "field":StdField.get(), "age":int(Age.get())}
-            if Exist(person)==False:
-                Register(person)
-                Load()
-                Clearentry()
-                print("register was succesfull")
-                #messagebox.showinfo("تمام", "ثبت نام با موفقیت انجام شد")
+            if person["age"]>=18:
+                if Exist(person)==False:
+                    Register(person)
+                    Load()
+                    Clearentry()
+                    #print("register was succesfull")
+                    messagebox.showinfo("Done!", "Resgister was succesful")
+                else:
+                    #print("this person is already registered")
+                    messagebox.showinfo("Warning!", "this person is already registered!")
             else:
-                print("this person is already registered")
-                #messagebox.showinfo("توجه", "این کاربر قبلا ثبت شده است")
+                 messagebox.showerror("attention!", "User is below legal age!")
         except:
-            print("please enter a number inside age box")
-            #messagebox.showerror("توجه", "مقدار داخل باکس سن را عددی وارد کنید")
+            #print("please enter a number inside age box")
+            messagebox.showerror("Attention!", "Please enter a number inside age box!")
 
 
 def Register(person):
@@ -103,12 +106,14 @@ def Search(dialog):
         
 
 def onclickdlt():
-    selected_row = table.selection()
-    if selected_row != ():
-        Data = table.item(selected_row)["values"]
-        person = {"name": Data[0], "lastname": Data[1], "field": Data[2], "age": int(Data[3])}
-        Delete(person)
-        table.delete(selected_row)
+    dialog = messagebox.askyesno("Deletion Warning!", "Are you sure of deleting this data?")
+    if dialog:
+        selected_row = table.selection()
+        if selected_row != ():
+            Data = table.item(selected_row)["values"]
+            person = {"name": Data[0], "lastname": Data[1], "field": Data[2], "age": int(Data[3])}
+            Delete(person)
+            table.delete(selected_row)
 
 
 def Delete(person):
@@ -136,14 +141,16 @@ def Selection(e):
 
 
 def onClickUpdate():
-     selected_row = table.selection()
-     if selected_row != ():
-        Data = table.item(selected_row)['values']
-        OldPerson = {'name': Data[0], 'lastname': Data[1], 'field': Data[2], 'age': int(Data[3])}
-        NewPerson={'name':Name.get(),'lastname':LasName.get(),'field':StdField.get(),'age':int(Age.get())}
-        Update(OldPerson,NewPerson)
-        Cleantable()
-        Load()
+    dialog = messagebox.askyesno("Attention!", "Are you sure of updating this data?")
+    if dialog:
+        selected_row = table.selection()
+        if selected_row != ():
+            Data = table.item(selected_row)['values']
+            OldPerson = {'name': Data[0], 'lastname': Data[1], 'field': Data[2], 'age': int(Data[3])}
+            NewPerson={'name':Name.get(),'lastname':LasName.get(),'field':StdField.get(),'age':int(Age.get())}
+            Update(OldPerson,NewPerson)
+            Cleantable()
+            Load()
 
 
 def Update(OldPerson,NewPerson):
