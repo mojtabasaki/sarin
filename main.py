@@ -247,3 +247,4 @@ table.bind("<Button-1>",Selection)
 
 
 screen.mainloop()
+
